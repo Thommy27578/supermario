@@ -1,18 +1,14 @@
 package com.bat.projectgdx.Tools;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.bat.projectgdx.Items.Item;
-import com.bat.projectgdx.Items.Mushroom;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Sprites.Enemy;
-import com.bat.projectgdx.Sprites.Cloud;
 import com.bat.projectgdx.Sprites.InteractiveTileObject;
 import com.bat.projectgdx.Sprites.Player;
 
@@ -77,6 +73,7 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
             case ProjectGdx.PLAYER_BIT | ProjectGdx.ITEM_BIT:
+            	contact.setEnabled(false);
                 if(fixtureA.getFilterData().categoryBits == ProjectGdx.ITEM_BIT){
                     ((Item)fixtureA.getUserData()).use();
                 }

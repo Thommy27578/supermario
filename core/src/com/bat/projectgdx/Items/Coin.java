@@ -1,8 +1,11 @@
 package com.bat.projectgdx.Items;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
@@ -11,10 +14,22 @@ import com.bat.projectgdx.Screens.GameScreen;
  */
 public class Coin extends Item {
     private final String ITEM_NAME = "coin";
+    
+    private float stateTime;
+    private Animation coinAnimation;
+    private Array<TextureRegion> frames;
 
     public Coin(GameScreen screen, float x, float y) {
         super(screen, x, y);
         setRegion(screen.getAtlas().findRegion(ITEM_NAME), 0, 0, 16, 16);
+        
+        //Coin Animation
+        frames = new Array<TextureRegion>();
+        for(int i = 0; i < 4; i++){
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("coin"), i*16, 0, 16, 16));
+        }
+        coinAnimation = new Animation(0.2f, frames);
+        stateTime = 0;
     }
     @Override
     public void defineItem() {
@@ -44,9 +59,11 @@ public class Coin extends Item {
 
     @Override
     public void update(float delta) {
-
         super.update(delta);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        //Coin Animation
+        stateTime += delta;
+        setRegion(coinAnimation.getKeyFrame(stateTime, true));
     }
 }
 
