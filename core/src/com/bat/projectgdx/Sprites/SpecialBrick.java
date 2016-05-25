@@ -3,7 +3,6 @@ package com.bat.projectgdx.Sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.bat.projectgdx.Items.ItemDef;
 import com.bat.projectgdx.Items.Mushroom;

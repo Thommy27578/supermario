@@ -26,7 +26,6 @@ import com.bat.projectgdx.Sprites.SpecialBrick;
 public class WorldCreator {
 
     private Array<Goomba> goomba;
-    private Coin tempCoin;
 
     public WorldCreator(GameScreen gameScreen){
         World world = gameScreen.getWorld();
