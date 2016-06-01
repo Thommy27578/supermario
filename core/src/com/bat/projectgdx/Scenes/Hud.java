@@ -25,6 +25,7 @@ public class Hud implements Disposable{
     private Integer worldTimer;
     private float timeCount;
     private Integer score;
+    public String name = "";
     
     private GameScreen gameScreen;
 
@@ -55,7 +56,7 @@ public class Hud implements Disposable{
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        playerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        playerLabel = new Label(name, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(playerLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
@@ -80,6 +81,7 @@ public class Hud implements Disposable{
         else if(worldTimer < 1){
         	gameScreen.getPlayer().die();
         }
+        playerLabel.setText(name);
     }
 
     //Erhöhen des vom Spieler erzielten Punktestands

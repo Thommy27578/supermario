@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bat.projectgdx.ProjectGdx;
@@ -24,14 +26,21 @@ public class TitleScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
     private final String TITLE = "The Journey";
-    private final String BUTTONTEXT = "Hit Enter to start the game!";
-
+    private final String BUTTONTEXT = "Drücke Enter";
+    private final String TEXTFIELD_PLACEHOLDER = "Dein Name";
+    
+    private TextField nameTextField;
+    
+    private String name;
+    
     private Game game;
 
     public TitleScreen(Game game){
         this.game = game;
         viewport = new FitViewport(ProjectGdx.V_WIDTH, ProjectGdx.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((ProjectGdx) game).batch);
+        
+        Gdx.input.setInputProcessor(stage);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
 
@@ -41,11 +50,22 @@ public class TitleScreen implements Screen {
 
         Label titleLabel = new Label(TITLE, font);
         Label buttonLabel = new Label(BUTTONTEXT, font);
+        Label textFieldLabel = new Label(TEXTFIELD_PLACEHOLDER, font);
+        TextFieldStyle textFieldStyle = new TextFieldStyle();
+        textFieldStyle.font = new BitmapFont();
+        textFieldStyle.fontColor = Color.BLACK;
+        nameTextField = new TextField("", textFieldStyle);
+        nameTextField.setMaxLength(10);
+        stage.setKeyboardFocus(nameTextField);
         
         
         table.add(titleLabel).expandX();
         table.row();
-        table.add(buttonLabel).expandX().padTop(10f);
+        table.add(textFieldLabel);
+        table.add(nameTextField);
+        table.row();
+        table.add(buttonLabel).expandX().padTop(20f);
+        
 
         stage.addActor(table);
     }
@@ -58,7 +78,10 @@ public class TitleScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-            game.setScreen(new GameScreen((ProjectGdx) game));
+        	name = nameTextField.getText();
+        	GameScreen screen = new GameScreen((ProjectGdx) game);
+        	screen.setPlayerName(name);
+            game.setScreen(screen);
             dispose();
         }
         Gdx.gl.glClearColor(1, 1, 1, 1);

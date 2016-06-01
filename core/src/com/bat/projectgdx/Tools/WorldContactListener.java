@@ -10,6 +10,7 @@ import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Sprites.Enemy;
 import com.bat.projectgdx.Sprites.InteractiveTileObject;
 import com.bat.projectgdx.Sprites.Player;
+import com.sun.javafx.font.Disposer;
 
 /**
  * Created by MSC on 14.03.2016.
@@ -81,6 +82,14 @@ public class WorldContactListener implements ContactListener {
                 else{
                     ((Item)fixtureB.getUserData()).use();
                 }
+                break;
+                
+            case ProjectGdx.PLAYER_BIT | ProjectGdx.DOOR_BIT:
+            	//contact.setEnabled(false);
+                if(fixtureA.getFilterData().categoryBits == ProjectGdx.PLAYER_BIT)
+                    ((InteractiveTileObject) fixtureB.getUserData()).onHeadHit((Player) fixtureA.getUserData());
+                else
+                    ((InteractiveTileObject) fixtureA.getUserData()).onHeadHit((Player) fixtureB.getUserData());
                 break;
         }
     }

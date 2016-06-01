@@ -22,8 +22,8 @@ import com.bat.projectgdx.ProjectGdx;
 public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
-    private final String winMessage = "LEVEL CLEARED!";
-    private final String loseMessage = "YOU DIED!";
+    private final String winMessage = "GEWONNEN!";
+    private final String loseMessage = "DU BIST GESTORBEN!";
 
     private Game game;
 
@@ -39,7 +39,7 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
         Label gameOverLabel = new Label(winMessage, font);
-        Label playAgainLabel = new Label("Click to Play Again", font);
+        Label playAgainLabel = new Label("Klicke um erneut zu Spielen", font);
         
         if(!gameWon){
         	gameOverLabel.setText(loseMessage);

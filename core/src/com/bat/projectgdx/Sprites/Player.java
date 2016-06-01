@@ -44,6 +44,7 @@ public class Player extends Sprite {
     private boolean isDead = false;
     GameScreen gameScreen;
 
+
     //Initialisieren der Variablen
     public Player(World world, GameScreen gameScreen){
         super(gameScreen.getAtlas().findRegion("little_mario"));
@@ -184,7 +185,8 @@ public class Player extends Sprite {
                 | ProjectGdx.OBJECT_BIT
                 | ProjectGdx.ENEMY_BIT
                 | ProjectGdx.ENEMY_HEAD_BIT
-                | ProjectGdx.ITEM_BIT ;
+                | ProjectGdx.ITEM_BIT
+                | ProjectGdx.DOOR_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);

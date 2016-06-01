@@ -137,6 +137,7 @@ public class Turtle extends Enemy {
     	}
     	else{
     		setRegion(shellTexture);
+	        velocity = new Vector2(-1.4f, 0);
     	}
 
     }

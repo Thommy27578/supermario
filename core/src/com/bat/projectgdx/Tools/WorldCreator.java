@@ -17,6 +17,7 @@ import com.bat.projectgdx.Screens.GameScreen;
 import com.bat.projectgdx.Sprites.Brick;
 import com.bat.projectgdx.Items.Coin;
 import com.bat.projectgdx.Sprites.Cloud;
+import com.bat.projectgdx.Sprites.Door;
 import com.bat.projectgdx.Sprites.Goomba;
 import com.bat.projectgdx.Sprites.SpecialBrick;
 import com.bat.projectgdx.Sprites.Turtle;
@@ -83,6 +84,11 @@ public class WorldCreator {
         //Special-Brick einlesen
         for(MapObject object : map.getLayers().get("SpecialBrick").getObjects().getByType(RectangleMapObject.class)){
             new SpecialBrick(object, gameScreen);
+        }
+        
+        //Door einlesen
+        for(MapObject object : map.getLayers().get("Finish").getObjects().getByType(RectangleMapObject.class)){
+            new Door(object, gameScreen);
         }
 
         //Cloud einlesen

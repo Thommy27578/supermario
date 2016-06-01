@@ -44,7 +44,8 @@ public class GameScreen implements Screen {
     private Hud hud;
     private Player player;
     private final String TEXTUREPACK_NAME = "Sprites\\entities.pack";
-    private final String LEVEL_NAME = "Maps\\world2.tmx";
+    private final String LEVEL_NAME = "Maps\\world3.tmx";
+    private String name;
 
     //Variablen für die Tiled Map
     private TmxMapLoader mapLoader;
@@ -154,7 +155,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
-            player.b2body.setTransform(new Vector2(0.1f,0.2f), 0);
+            player.b2body.setTransform(new Vector2(35f,0.2f), 0);
         }
     }
 
@@ -280,5 +281,9 @@ public class GameScreen implements Screen {
         renderer.dispose();
         b2dr.dispose();
         hud.dispose();
+    }
+    
+    public void setPlayerName(String name){
+    	hud.name = name;
     }
 }
