@@ -3,7 +3,6 @@ package com.bat.projectgdx.Screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,33 +18,37 @@ import com.bat.projectgdx.ProjectGdx;
  * Created by msc on 05/28/16.
  */
 
-//Startbildschirm nach Anwendungsstart - Führt zu Spielbilschirm
-public class TitleScreen implements Screen {
+//Bildschirm der angezeigt wird wenn das Spiel beendet ist - Bietet Möglichkeit neu zu starten
+public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
-    private final String TITLE = "The Journey";
-    private final String BUTTONTEXT = "Hit Enter to start the game!";
+    private final String winMessage = "LEVEL CLEARED!";
+    private final String loseMessage = "YOU DIED!";
 
     private Game game;
 
-    public TitleScreen(Game game){
+    public GameOverScreen(Game game, boolean gameWon){
         this.game = game;
         viewport = new FitViewport(ProjectGdx.V_WIDTH, ProjectGdx.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((ProjectGdx) game).batch);
 
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
+        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
         table.center();
         table.setFillParent(true);
 
-        Label titleLabel = new Label(TITLE, font);
-        Label buttonLabel = new Label(BUTTONTEXT, font);
+        Label gameOverLabel = new Label(winMessage, font);
+        Label playAgainLabel = new Label("Click to Play Again", font);
+        
+        if(!gameWon){
+        	gameOverLabel.setText(loseMessage);
+        }
         
         
-        table.add(titleLabel).expandX();
+        table.add(gameOverLabel).expandX();
         table.row();
-        table.add(buttonLabel).expandX().padTop(10f);
+        table.add(playAgainLabel).expandX().padTop(10f);
 
         stage.addActor(table);
     }
@@ -57,11 +60,12 @@ public class TitleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+    	//Wenn Mauseingabe (Linksklick), dann wird das Spiel neugestartet
+        if(Gdx.input.justTouched()) {
             game.setScreen(new GameScreen((ProjectGdx) game));
             dispose();
         }
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }

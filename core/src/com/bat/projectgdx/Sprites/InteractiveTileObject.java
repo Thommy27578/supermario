@@ -19,6 +19,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 14.03.2016.
  */
+
+//Abstrakte Klasse für Items die einsammelbar durch den Spieler sind
 public abstract class InteractiveTileObject {
     protected World world;
     protected TiledMap map;

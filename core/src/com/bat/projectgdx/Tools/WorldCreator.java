@@ -19,15 +19,24 @@ import com.bat.projectgdx.Items.Coin;
 import com.bat.projectgdx.Sprites.Cloud;
 import com.bat.projectgdx.Sprites.Goomba;
 import com.bat.projectgdx.Sprites.SpecialBrick;
+import com.bat.projectgdx.Sprites.Turtle;
 
 /**
  * Created by MSC on 14.03.2016.
  */
+
+/*Klasse für Levelerstellung durch Einlesen einer Map-Datei vom Typ tmx.
+ * Die tmx Datei beinhaltet alle Angaben zu den Objekten innerhalb eines Levels
+ * wie der Objekt-Typ, die Position und die Textur. Durch Einlesen der Datei wird das Level nach diesem Plan
+ * konstruiert.
+*/
 public class WorldCreator {
 
     private Array<Goomba> goomba;
-
+    private Array<Turtle> turtle;
+    
     public WorldCreator(GameScreen gameScreen){
+    	
         World world = gameScreen.getWorld();
         TiledMap map = gameScreen.getMap();
         BodyDef bdef = new BodyDef();
@@ -61,22 +70,22 @@ public class WorldCreator {
             fdef.filter.categoryBits = ProjectGdx.OBJECT_BIT;
             body.createFixture(fdef);
         }
-        //Bricks
+        //Bricks einlesen
         for(MapObject object : map.getLayers().get("Brick").getObjects().getByType(RectangleMapObject.class)){
            new Brick(object, gameScreen);
         }
-        //Coins
+        //Coins einlesen
         for(MapObject object : map.getLayers().get("Coin").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             gameScreen.spawnItem(new ItemDef(new Vector2((rect.getX()+ rect.getWidth()/2) / ProjectGdx.PPM, (rect.getY()+ rect.getWidth()/2) / ProjectGdx.PPM), Coin.class));
         }
 
-        //Special-Brick
+        //Special-Brick einlesen
         for(MapObject object : map.getLayers().get("SpecialBrick").getObjects().getByType(RectangleMapObject.class)){
             new SpecialBrick(object, gameScreen);
         }
 
-        //Cloud
+        //Cloud einlesen
         for(MapObject object : map.getLayers().get("Cloud").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.KinematicBody;
@@ -91,13 +100,24 @@ public class WorldCreator {
             new Cloud(object, gameScreen);
         }
 
-        //Goomba
+        //Goomba einlesen
         goomba = new Array<Goomba>();
         for(MapObject object : map.getLayers().get("Goomba").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             goomba.add(new Goomba(gameScreen, rect.getX() / ProjectGdx.PPM, rect.getY() / ProjectGdx.PPM));
         }
+        
+        //Turtle einlesen
+        turtle = new Array<Turtle>();
+        for(MapObject object : map.getLayers().get("Turtle").getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            turtle.add(new Turtle(gameScreen, rect.getX() / ProjectGdx.PPM, rect.getY() / ProjectGdx.PPM));
+        }
 
+    }
+    
+    public Array<Turtle> getTurtle() {
+        return turtle;
     }
 
     public Array<Goomba> getGoomba() {

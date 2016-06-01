@@ -10,6 +10,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 01.04.2016.
  */
+
+//Definieren des Items Mushroom - Festlegen der Position im Spiel und Animation der Texturen
 public class Mushroom extends Item {
     private final String ITEM_NAME = "mushroom";
 
@@ -48,7 +50,6 @@ public class Mushroom extends Item {
     @Override
     public void update(float delta) {
         super.update(delta);
-        //To center the Sprite on the body
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         velocity.y = body.getLinearVelocity().y;
         body.setLinearVelocity(velocity);

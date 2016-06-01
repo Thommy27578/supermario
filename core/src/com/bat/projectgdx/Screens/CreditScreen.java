@@ -14,9 +14,11 @@ import com.bat.projectgdx.Scenes.Hud;
 /**
  * Created by msc on 10.05.2016
  */
+
+//Credit Screen - Informationen des Teams 
 public class CreditScreen implements Screen {
 
-    //Main variables
+    //Hauptvariablen
     private ProjectGdx game;
     private TextureAtlas atlas;
     private Viewport viewport;
@@ -58,11 +60,6 @@ public class CreditScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //renderer.render();
-
-        //render box2d
-        //b2dr.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();

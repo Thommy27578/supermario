@@ -15,6 +15,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 18.03.2016.
  */
+
+//Gegner Goomba - Verwalten der Position, des Körpers und Animation der Texturen 
 public class Goomba extends Enemy {
 
     private float stateTime;
@@ -45,6 +47,7 @@ public class Goomba extends Enemy {
             return;
         }
 
+        //Entfernen des Gegners wenn zerstört
         else if(setToDestroy){
             world.destroyBody(b2dbody);
             destroyed = true;
@@ -57,6 +60,8 @@ public class Goomba extends Enemy {
         setRegion(walkAnimation.getKeyFrame(stateTime, true));
         b2dbody.setLinearVelocity(velocity);
     }
+    
+    //Definieren des Körpers für Kollisionen
 
     @Override
     protected void defineEnemy() {
@@ -100,10 +105,12 @@ public class Goomba extends Enemy {
         }
     }
 
+    //Wenn Gegner an Kopf getroffen, dann zerstöre ihn
     public void hitOnHead(){
         setToDestroy = true;
     }
 
+    //Umkehren der Bewegungsrichtung nach Kollision mit statischem Objekt (Aufruf durch Kollisionslistener)
     @Override
     public void reverseVelocity(boolean x, boolean y) {
         if(x){

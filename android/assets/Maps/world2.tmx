@@ -71,6 +71,6 @@
   <object id="49" x="304" y="128" width="16" height="16"/>
   <object id="50" x="672" y="144" width="16" height="16"/>
   <object id="51" x="1616" y="160" width="16" height="16"/>
-  <object id="52" x="1488" y="160" width="16" height="16"/>
- </objectgroup>
-</map>
+ 
+</objectgroup>
+  <objectgroup name="Turtle"> <object id="52" x="1488" y="160" width="16" height="16"/> </objectgroup> </map>

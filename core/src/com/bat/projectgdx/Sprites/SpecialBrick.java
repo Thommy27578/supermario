@@ -13,6 +13,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 18.03.2016.
  */
+
+//Klasse für SpecialBrick Objekt - Beinhaltet Item nach Zerstörung
 public class SpecialBrick extends InteractiveTileObject{
     private Hud hud;
     private TiledMapTileSet tileSet;
@@ -28,6 +30,7 @@ public class SpecialBrick extends InteractiveTileObject{
         hud = gameScreen.getHud();
     }
 
+    //Ändern der Textur nach Zerstören des Objekts
     @Override
     public void onHeadHit(Player player) {
         Gdx.app.log("SpecialBrick", "Collision");

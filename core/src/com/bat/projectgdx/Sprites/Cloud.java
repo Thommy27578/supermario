@@ -7,6 +7,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 21.03.2016.
  */
+
+//Klasse für Cloud Objekt
 public class Cloud extends InteractiveTileObject{
     public Cloud(MapObject object, GameScreen gameScreen) {
         super(object, gameScreen);

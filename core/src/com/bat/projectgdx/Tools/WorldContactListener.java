@@ -1,6 +1,5 @@
 package com.bat.projectgdx.Tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -15,14 +14,18 @@ import com.bat.projectgdx.Sprites.Player;
 /**
  * Created by MSC on 14.03.2016.
  */
+
+//Kollisionslistener - fixtureA Kollisionsteilhaber 1 fixtureB entsprechend anderer Teilhaber
 public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
+        //Bitweise Addition der Teilhaber zwecks Identifizierung des Kollisionsfalls
         int cDef = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
 
+        //Identifizierung der Kollision und entsprechende Reaktion auf Ereignis
         switch (cDef){
 
             case ProjectGdx.PLAYER_HEAD_BIT | ProjectGdx.BRICK_BIT:
@@ -33,7 +36,6 @@ public class WorldContactListener implements ContactListener {
                 break;
 
             case ProjectGdx.PLAYER_BIT | ProjectGdx.ENEMY_BIT:
-                Gdx.app.log("Player", "Dead");
                 if(fixtureA.getFilterData().categoryBits == ProjectGdx.ENEMY_BIT && fixtureB.getUserData() != null){
                     ((Player)fixtureB.getUserData()).die();
                     ((Enemy)fixtureA.getUserData()).reverseVelocity(true, false);
@@ -63,7 +65,6 @@ public class WorldContactListener implements ContactListener {
                 ((Enemy)fixtureA.getUserData()).reverseVelocity(true, false);
                 ((Enemy)fixtureB.getUserData()).reverseVelocity(true, false);
                 break;
-            //case ProjectGdx.ITEM_BIT | ProjectGdx.BRICK_BIT:
             case ProjectGdx.ITEM_BIT | ProjectGdx.OBJECT_BIT:
                 if(fixtureA.getFilterData().categoryBits == ProjectGdx.ITEM_BIT){
                     ((Item)fixtureA.getUserData()).reverseVelocity(true, false);

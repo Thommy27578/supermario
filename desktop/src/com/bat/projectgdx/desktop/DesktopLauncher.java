@@ -4,6 +4,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.bat.projectgdx.ProjectGdx;
 
+
+//Hauptklasse - Startet über Klasse ProjectGdx das Spiel
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -12,3 +14,4 @@ public class DesktopLauncher {
 		new LwjglApplication(new ProjectGdx(), config);
 	}
 }
+

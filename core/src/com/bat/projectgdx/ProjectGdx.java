@@ -2,8 +2,9 @@ package com.bat.projectgdx;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.bat.projectgdx.Screens.GameScreen;
+import com.bat.projectgdx.Screens.TitleScreen;
 
+//Einstiegsklasse die nach Start den Bildschirm festlegt und die Werte der Kollisionsbits beinhaltet
 public class ProjectGdx extends Game {
 
 	public SpriteBatch batch;
@@ -21,13 +22,14 @@ public class ProjectGdx extends Game {
 	public static final short PLAYER_HEAD_BIT = 128;
 	public static final short ITEM_BIT = 256;
 	public static final short NOTHING_BIT = 512;
-	public static GameScreen screen;
+	//public static GameScreen screen;
+	public static TitleScreen titleScreen;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		screen = new GameScreen(this);
-		setScreen(screen);
+		titleScreen = new TitleScreen(this);
+		setScreen(titleScreen);
 	}
 
 	@Override

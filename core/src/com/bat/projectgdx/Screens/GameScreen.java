@@ -21,9 +21,9 @@ import com.bat.projectgdx.Items.ItemDef;
 import com.bat.projectgdx.Items.Mushroom;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Scenes.Hud;
-import com.bat.projectgdx.Sprites.Enemy;
 import com.bat.projectgdx.Sprites.Goomba;
 import com.bat.projectgdx.Sprites.Player;
+import com.bat.projectgdx.Sprites.Turtle;
 import com.bat.projectgdx.Tools.WorldContactListener;
 import com.bat.projectgdx.Tools.WorldCreator;
 
@@ -32,9 +32,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Created by msc on 11.03.2016.
  */
+
+//Spielbilschirm
 public class GameScreen implements Screen {
 
-    //Main variables
+    //Hauptvariablen - Verweis auf Hilfsklassen die im Spiel Anwendung finden
     private ProjectGdx game;
     private TextureAtlas atlas;
     private Viewport viewport;
@@ -44,42 +46,51 @@ public class GameScreen implements Screen {
     private final String TEXTUREPACK_NAME = "Sprites\\entities.pack";
     private final String LEVEL_NAME = "Maps\\world2.tmx";
 
-    //Tiled Map variables
+    //Variablen für die Tiled Map
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private float mapWidth;
 
-    //Box2d variables
+    //Box2d Variablen - Für physikalische Ereignisse wie Kollision, Gravitation etc. notwendig
     private World world;
     private Box2DDebugRenderer b2dr;
     private WorldCreator worldCreator;
 
-    //Items
+    //Item Variablen - Listen für Objekte im Spiel
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-    public Hud getHud(){
-        return hud;
-    }
-
     public GameScreen(ProjectGdx game){
+    	
+    	/*Erzeugen eines TextureAtlas für die Verwaltung der Grafiken für das Level, Spielobjekte,
+    	und Entitäten wie den Spieler oder Gegner*/
+    	
         atlas = new TextureAtlas(TEXTUREPACK_NAME);
 
         this.game = game;
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(ProjectGdx.V_WIDTH / ProjectGdx.PPM, ProjectGdx.V_HEIGHT / ProjectGdx.PPM, gameCam);
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, this);
 
+        
+        //Laden eines Levels
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(LEVEL_NAME);
+        
+        //Bestimmen der Map Breite
+        mapWidth = map.getProperties().get("width", Integer.class);
+        
         renderer = new OrthogonalTiledMapRenderer(map, 1 / ProjectGdx.PPM);
 
-        //Item initialize
+        //Itemlisten initialisieren
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
 
-        gameCam.position.set((viewport.getWorldWidth() / 2), viewport.getWorldHeight() / 2, 0);
+        //Ausrichten der Kamera auf das Level
+        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
+        //Erzeugen des Welt Objekts - Legt grundlegende Dinge wie Gravitation (-10) fest
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
@@ -87,14 +98,22 @@ public class GameScreen implements Screen {
 
         player = new Player(world, this);
 
+        //Ein Kollisionslistener wird festgelegt
         world.setContactListener(new WorldContactListener());
 
     }
+    
+    //Bietet Zugriff auf das Overlay, welches den Timer, den Levelnamen etc. anzeigt
+    public Hud getHud(){
+        return hud;
+    }
 
+    //Erweitern der Liste der zu erzeugenden Gegenstände in einem Level
     public void spawnItem(ItemDef idef){
         itemsToSpawn.add(idef);
     }
 
+    //Hinzufügen der Items zu Liste der im Level verfügbaren Items mit Position (x,y)
     public void handleSpawningItems(){
         if(!itemsToSpawn.isEmpty()){
             ItemDef idef = itemsToSpawn.poll();
@@ -116,6 +135,7 @@ public class GameScreen implements Screen {
         return player;
     }
 
+    //Behandeln der Tastatureingaben durch Nutzer
     public void handleInput(float delta){
 
         if(player.currentState == Player.State.DEAD) {
@@ -142,6 +162,8 @@ public class GameScreen implements Screen {
         return atlas;
     }
 
+    
+    //Updaten der Items, Kamera, Spieler, Gegner (Positionsänderungen werden übernommen)
     public void update(float delta){
         handleInput(delta);
         handleSpawningItems();
@@ -151,7 +173,14 @@ public class GameScreen implements Screen {
         player.update(delta);
 
 
-        for(Enemy enemy : worldCreator.getGoomba()){
+        for(Goomba enemy : worldCreator.getGoomba()){
+            enemy.update(delta);
+            if(enemy.getX() < player.getX() + 224 / ProjectGdx.PPM){
+                enemy.b2dbody.setActive(true);
+            }
+        }
+        
+        for(Turtle enemy : worldCreator.getTurtle()){
             enemy.update(delta);
             if(enemy.getX() < player.getX() + 224 / ProjectGdx.PPM){
                 enemy.b2dbody.setActive(true);
@@ -162,15 +191,17 @@ public class GameScreen implements Screen {
             item.update(delta);
         }
         hud.update(delta);
-
-        if(player.currentState != Player.State.DEAD) {
+        
+        if (player.b2body.getPosition().x >= (0.01f + (viewport.getWorldWidth() / 2)) && player.b2body.getPosition().x <= mapWidth - viewport.getWorldWidth() / 2) {
             gameCam.position.x = player.b2body.getPosition().x;
         }
-
+        
         gameCam.update();
         renderer.setView(gameCam);
     }
 
+    
+    //Zeichnen der nach Update geänderten Objekte auf Spielbildschirm
     @Override
     public void render(float delta) {
         update(delta);
@@ -189,6 +220,9 @@ public class GameScreen implements Screen {
         for(Goomba enemy : worldCreator.getGoomba()){
             enemy.draw(game.batch);
         }
+        for(Turtle enemyTurtle : worldCreator.getTurtle()){
+            enemyTurtle.draw(game.batch);
+        }
         for(Item item : items){
             item.draw(game.batch);
         }
@@ -196,12 +230,23 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        
+      //Check if Player is dead
+        if(player.isDead() && player.getStateTimer() > 3){
+        	gameOver(false);
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
 
+    }
+    
+    //Methode die das Spiel beendet und die Ressourcen für Grafiken etc. wieder freigibt
+    public void gameOver(boolean gameWon){
+    	game.setScreen(new GameOverScreen(game, gameWon));
+    	dispose();
     }
 
     public World getWorld(){
@@ -227,6 +272,7 @@ public class GameScreen implements Screen {
 
     }
 
+    //Freigeben von Ressourcen wenn nicht mehr gebraucht
     @Override
     public void dispose() {
         map.dispose();

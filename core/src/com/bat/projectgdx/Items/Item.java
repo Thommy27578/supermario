@@ -11,17 +11,21 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 01.04.2016.
  */
+
+/*Abstrakte Klasse für alle Items - Vorgabe für Position, Definieren des Körpers und 
+ behandeln der Nutzung des Objekts (Spieler kollidiert mit Item)*/
+
 public abstract class Item extends Sprite {
-    protected GameScreen screen;
+    protected GameScreen gameScreen;
     protected World world;
     protected Vector2 velocity;
     protected boolean toDestroy;
     protected boolean destroyed;
     protected Body body;
 
-    public Item(GameScreen screen, float x, float y){
-        this.screen = screen;
-        this.world = screen.getWorld();
+    public Item(GameScreen gameScreen, float x, float y){
+        this.gameScreen = gameScreen;
+        this.world = gameScreen.getWorld();
         setPosition(x, y);
         setBounds(getX(), getY(), 16 / ProjectGdx.PPM, 16 / ProjectGdx.PPM);
         defineItem();

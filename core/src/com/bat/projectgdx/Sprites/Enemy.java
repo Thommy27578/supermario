@@ -9,6 +9,8 @@ import com.bat.projectgdx.Screens.GameScreen;
 /**
  * Created by MSC on 18.03.2016.
  */
+
+//Abstrakte Klasse für Gegner
 public abstract class Enemy extends Sprite {
 
     protected World world;

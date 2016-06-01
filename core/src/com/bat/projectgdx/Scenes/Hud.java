@@ -11,10 +11,13 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bat.projectgdx.ProjectGdx;
+import com.bat.projectgdx.Screens.GameScreen;
 
 /**
  * Created by msc on 11.03.2016.
  */
+
+//Overlay zwecks Timer, Levelname etc anzeige
 public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
@@ -22,7 +25,10 @@ public class Hud implements Disposable{
     private Integer worldTimer;
     private float timeCount;
     private Integer score;
+    
+    private GameScreen gameScreen;
 
+    //Label die Text enthalten der im Overlay angezeigt wird
     Label countdownLabel;
     Label scoreLabel;
     Label timeLabel;
@@ -30,10 +36,13 @@ public class Hud implements Disposable{
     Label worldLabel;
     Label playerLabel;
 
-    public Hud(SpriteBatch spriteBatch){
-        worldTimer = 300;
+    //Initialiseren der Variablen und festlegen der Positionen der Texte in Tabellenform
+    public Hud(SpriteBatch spriteBatch, GameScreen gameScreen){
+        worldTimer = 100;
         timeCount = 0;
         score = 0;
+        
+        this.gameScreen = gameScreen;
 
         viewport = new FitViewport(ProjectGdx.V_WIDTH, ProjectGdx.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
@@ -60,15 +69,20 @@ public class Hud implements Disposable{
 
     }
 
+    //Updaten des Timers - Zeit wird heruntergezählt
     public void update(float delta){
        timeCount += delta;
-        if(timeCount >= 1){
+        if(timeCount >= 1 && worldTimer >= 1){
             worldTimer--;
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
         }
+        else if(worldTimer < 1){
+        	gameScreen.getPlayer().die();
+        }
     }
 
+    //Erhöhen des vom Spieler erzielten Punktestands
     public void addScore(int value){
         score += value;
         scoreLabel.setText(String.format("%06d", score));
