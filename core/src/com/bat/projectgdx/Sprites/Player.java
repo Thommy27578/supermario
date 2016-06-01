@@ -25,6 +25,7 @@ public class Player extends Sprite {
 	
 	//Verwalten der Stati des Spielers um die richtigen Texturen zu laden
     public enum State {JUMPING, FALLING, RUNNING, IDLE, DEAD};
+    
     public State currentState;
     public State previousState;
     
@@ -40,12 +41,13 @@ public class Player extends Sprite {
     private Animation runAnimation;
     
     private float stateTimer;
+    private int invincibleTime=0;
     private boolean faceToRight;
     private boolean isDead = false;
+    private boolean invincible = false;
     GameScreen gameScreen;
     
     private boolean win = false;
-
 
     //Initialisieren der Variablen
     public Player(World world, GameScreen gameScreen){
@@ -80,13 +82,26 @@ public class Player extends Sprite {
 
     /*Updaten der Position des Spielers und der Textur in abhängigkeit der aktuellen Textur und
     der vergangenen Zeit zwischen diesem und dem letzten Aufruf der Methode (delta)*/
+    
+    public void setInvincible(){
+    	invincible=true;
+    }
+    
     public void update(float delta){
+    	if (invincible==true){
+    	invincibleTime++;
+    	if (invincibleTime>100){
+    		invincible=false;
+    		this.setAlpha(1);
+    		invincibleTime=0;
+    	}
+    	}
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
-        
+    	
         //Prüfen ob Spieler gefallen ist (Unter Boden Höhe)
         if(b2body.getPosition().y < 0){
-        	die(false);
+        	die(win);
         }
     }
 
@@ -112,11 +127,11 @@ public class Player extends Sprite {
         }
 
         //Spiegeln der Textur in Blickrichtung des Spielers
-        if((b2body.getLinearVelocity().x < 0 || !faceToRight) && !region.isFlipX()){
+        if((b2body.getLinearVelocity().x < -0.1 || !faceToRight) && !region.isFlipX()){
             region.flip(true, false);
             faceToRight = false;
         }
-        else if((b2body.getLinearVelocity().x > 0 || faceToRight) && region.isFlipX()){
+        else if((b2body.getLinearVelocity().x > 0.1 || faceToRight) && region.isFlipX()){
             region.flip(true, false);
             faceToRight = true;
         }
@@ -148,18 +163,17 @@ public class Player extends Sprite {
     public boolean isDead(){
         return this.isDead;
     }
-    
+
     public boolean hasWon(){
     	return win;
     }
-
     
     //Behandeln des Ereignisses, wenn Spieler stirbt
     public void die(boolean win) {
-
+    	if (!invincible){
         if (!isDead()) {
             isDead = true;
-            this.win = win;
+            this.win=win;
             
             //Gibt Spielfigur Bewegungsimpuls nach oben und hebt Bewegung in x Richtung auf
             b2body.applyLinearImpulse(new Vector2(b2body.getLinearVelocity().x * -1, 6f + b2body.getLinearVelocity().y * -1), b2body.getWorldCenter(), true);
@@ -172,6 +186,8 @@ public class Player extends Sprite {
                 fixture.setFilterData(filter);
             }
         }
+    	}
+        
     }
 
     //Erezugt Körper für Spieler der für alle Kollisionen verantwortlich ist
@@ -180,8 +196,7 @@ public class Player extends Sprite {
         bdef.position.set(32 / ProjectGdx.PPM,32 / ProjectGdx.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        b2body.setGravityScale(1.25f);
-
+        b2body.setGravityScale(1.1f);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(6 / ProjectGdx.PPM);
@@ -195,6 +210,7 @@ public class Player extends Sprite {
                 | ProjectGdx.ENEMY_HEAD_BIT
                 | ProjectGdx.ITEM_BIT
                 | ProjectGdx.DOOR_BIT;
+       
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
