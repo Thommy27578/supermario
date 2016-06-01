@@ -38,11 +38,11 @@ public class WorldContactListener implements ContactListener {
 
             case ProjectGdx.PLAYER_BIT | ProjectGdx.ENEMY_BIT:
                 if(fixtureA.getFilterData().categoryBits == ProjectGdx.ENEMY_BIT && fixtureB.getUserData() != null){
-                    ((Player)fixtureB.getUserData()).die();
+                    ((Player)fixtureB.getUserData()).die(false);
                     ((Enemy)fixtureA.getUserData()).reverseVelocity(true, false);
                 }
                 else if (fixtureA.getUserData() != null){
-                    ((Player)fixtureA.getUserData()).die();
+                    ((Player)fixtureA.getUserData()).die(false);
                     ((Enemy)fixtureB.getUserData()).reverseVelocity(true, false);
                 }
                 break;

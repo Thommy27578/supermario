@@ -79,7 +79,7 @@ public class Hud implements Disposable{
             timeCount = 0;
         }
         else if(worldTimer < 1){
-        	gameScreen.getPlayer().die();
+        	gameScreen.getPlayer().die(false);
         }
         playerLabel.setText(name);
     }

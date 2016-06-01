@@ -43,6 +43,8 @@ public class Player extends Sprite {
     private boolean faceToRight;
     private boolean isDead = false;
     GameScreen gameScreen;
+    
+    private boolean win = false;
 
 
     //Initialisieren der Variablen
@@ -84,7 +86,7 @@ public class Player extends Sprite {
         
         //Prüfen ob Spieler gefallen ist (Unter Boden Höhe)
         if(b2body.getPosition().y < 0){
-        	die();
+        	die(false);
         }
     }
 
@@ -146,13 +148,18 @@ public class Player extends Sprite {
     public boolean isDead(){
         return this.isDead;
     }
+    
+    public boolean hasWon(){
+    	return win;
+    }
 
     
     //Behandeln des Ereignisses, wenn Spieler stirbt
-    public void die() {
+    public void die(boolean win) {
 
         if (!isDead()) {
             isDead = true;
+            this.win = win;
             
             //Gibt Spielfigur Bewegungsimpuls nach oben und hebt Bewegung in x Richtung auf
             b2body.applyLinearImpulse(new Vector2(b2body.getLinearVelocity().x * -1, 6f + b2body.getLinearVelocity().y * -1), b2body.getWorldCenter(), true);

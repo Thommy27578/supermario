@@ -233,8 +233,11 @@ public class GameScreen implements Screen {
         hud.stage.draw();
         
       //Check if Player is dead
-        if(player.isDead() && player.getStateTimer() > 3){
+        if(player.isDead() && !player.hasWon() && player.getStateTimer() > 3){
         	gameOver(false);
+        }
+        else if (player.isDead() && player.hasWon() && player.getStateTimer() > 3){
+        	gameOver(true);
         }
     }
 
