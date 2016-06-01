@@ -44,6 +44,8 @@ public class Mushroom extends Item {
 
     @Override
     public void use() {
+    	gameScreen.getPlayer().setInvincible();
+    	gameScreen.getPlayer().setAlpha(100);
         destroy();
     }
 
