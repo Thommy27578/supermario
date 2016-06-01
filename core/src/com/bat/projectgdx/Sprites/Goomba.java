@@ -69,6 +69,7 @@ public class Goomba extends Enemy {
         bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2dbody = world.createBody(bdef);
+        b2dbody.setGravityScale(15f);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();

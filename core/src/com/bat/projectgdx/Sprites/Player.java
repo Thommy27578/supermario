@@ -172,6 +172,7 @@ public class Player extends Sprite {
         bdef.position.set(32 / ProjectGdx.PPM,32 / ProjectGdx.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+        b2body.setGravityScale(1.25f);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
