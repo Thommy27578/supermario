@@ -16,9 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 14.03.2016.
- */
+
 
 //Spieler Klasse - Legt den Körper zwecks Kollisionen fest und die jeweils passenden Texturen
 public class Player extends Sprite {
@@ -90,7 +88,7 @@ public class Player extends Sprite {
     public void update(float delta){
     	if (invincible==true){
     	invincibleTime++;
-    	if (invincibleTime>100){
+    	if (invincibleTime>200){
     		invincible=false;
     		this.setAlpha(1);
     		invincibleTime=0;

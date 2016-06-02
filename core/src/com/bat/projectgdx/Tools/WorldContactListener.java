@@ -10,11 +10,8 @@ import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Sprites.Enemy;
 import com.bat.projectgdx.Sprites.InteractiveTileObject;
 import com.bat.projectgdx.Sprites.Player;
-import com.sun.javafx.font.Disposer;
 
-/**
- * Created by MSC on 14.03.2016.
- */
+
 
 //Kollisionslistener - fixtureA Kollisionsteilhaber 1 fixtureB entsprechend anderer Teilhaber
 public class WorldContactListener implements ContactListener {

@@ -11,9 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Scenes.Hud;
 
-/**
- * Created by msc on 10.05.2016
- */
+
 
 //Credit Screen - Informationen des Teams 
 public class CreditScreen implements Screen {

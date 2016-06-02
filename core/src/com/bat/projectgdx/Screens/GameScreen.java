@@ -29,9 +29,7 @@ import com.bat.projectgdx.Tools.WorldCreator;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- * Created by msc on 11.03.2016.
- */
+
 
 //Spielbilschirm
 public class GameScreen implements Screen {
@@ -45,7 +43,6 @@ public class GameScreen implements Screen {
     private Player player;
     private final String TEXTUREPACK_NAME = "Sprites\\entities.pack";
     private final String LEVEL_NAME = "Maps\\world3.tmx";
-    private String name;
 
     //Variablen für die Tiled Map
     private TmxMapLoader mapLoader;
@@ -61,8 +58,11 @@ public class GameScreen implements Screen {
     //Item Variablen - Listen für Objekte im Spiel
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
+    private String playername; 
 
-    public GameScreen(ProjectGdx game){
+ 
+
+	public GameScreen(ProjectGdx game){
     	
     	/*Erzeugen eines TextureAtlas für die Verwaltung der Grafiken für das Level, Spielobjekte,
     	und Entitäten wie den Spieler oder Gegner*/
@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
         map = mapLoader.load(LEVEL_NAME);
         
         //Bestimmen der Map Breite
-        mapWidth = map.getProperties().get("width", Integer.class);
+        mapWidth = (float) map.getProperties().get("width", Integer.class);
         
         renderer = new OrthogonalTiledMapRenderer(map, 1 / ProjectGdx.PPM);
 
@@ -101,7 +101,8 @@ public class GameScreen implements Screen {
 
         //Ein Kollisionslistener wird festgelegt
         world.setContactListener(new WorldContactListener());
-
+        
+        
     }
     
     //Bietet Zugriff auf das Overlay, welches den Timer, den Levelnamen etc. anzeigt
@@ -213,8 +214,8 @@ public class GameScreen implements Screen {
         renderer.render();
 
         //render box2d
-        b2dr.render(world, gameCam.combined);
-
+//        b2dr.render(world, gameCam.combined);
+        
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
@@ -286,7 +287,15 @@ public class GameScreen implements Screen {
         hud.dispose();
     }
     
-    public void setPlayerName(String name){
-    	hud.name = name;
+    public void setPlayerHudName(){
+    	hud.name = playername;
     }
+    
+    public String getPlayername() {
+ 		return playername;
+ 	}
+
+ 	public void setPlayername(String playername) {
+ 		this.playername = playername;
+ 	}
 }

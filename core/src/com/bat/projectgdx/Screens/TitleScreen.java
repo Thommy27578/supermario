@@ -17,9 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bat.projectgdx.ProjectGdx;
 
-/**
- * Created by msc on 05/28/16.
- */
+
 
 //Startbildschirm nach Anwendungsstart - Führt zu Spielbilschirm
 public class TitleScreen implements Screen {
@@ -80,7 +78,8 @@ public class TitleScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
         	name = nameTextField.getText();
         	GameScreen screen = new GameScreen((ProjectGdx) game);
-        	screen.setPlayerName(name);
+        	screen.setPlayername(name);
+        	screen.setPlayerHudName();
             game.setScreen(screen);
             dispose();
         }

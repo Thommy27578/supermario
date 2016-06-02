@@ -3,9 +3,7 @@ package com.bat.projectgdx.Sprites;
 import com.badlogic.gdx.maps.MapObject;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 18.03.2016.
- */
+
 
 //Klasse für Wasser Objekt
 public class Water extends InteractiveTileObject {

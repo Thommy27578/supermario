@@ -4,9 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 21.03.2016.
- */
+
 
 //Klasse für Cloud Objekt
 public class Cloud extends InteractiveTileObject{

@@ -8,9 +8,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 01.04.2016.
- */
+
+
 
 /*Abstrakte Klasse für alle Items - Vorgabe für Position, Definieren des Körpers und 
  behandeln der Nutzung des Objekts (Spieler kollidiert mit Item)*/

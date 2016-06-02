@@ -7,9 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 01.04.2016.
- */
+
 
 //Definieren des Items Mushroom - Festlegen der Position im Spiel und Animation der Texturen
 public class Mushroom extends Item {

@@ -5,9 +5,7 @@ import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Scenes.Hud;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 14.03.2016.
- */
+
 
 //Klasse für Brick Objekt 
 public class Brick extends InteractiveTileObject {

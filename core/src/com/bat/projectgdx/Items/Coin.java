@@ -9,9 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 14.03.2016.
- */
+
 
 //Definieren des Items Coin - Festlegen der Position im Spiel und Animation der Texturen
 public class Coin extends Item {

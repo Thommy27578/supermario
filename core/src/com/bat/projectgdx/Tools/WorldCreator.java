@@ -22,9 +22,7 @@ import com.bat.projectgdx.Sprites.Goomba;
 import com.bat.projectgdx.Sprites.SpecialBrick;
 import com.bat.projectgdx.Sprites.Turtle;
 
-/**
- * Created by MSC on 14.03.2016.
- */
+
 
 /*Klasse für Levelerstellung durch Einlesen einer Map-Datei vom Typ tmx.
  * Die tmx Datei beinhaltet alle Angaben zu den Objekten innerhalb eines Levels
@@ -67,9 +65,11 @@ public class WorldCreator {
             body = world.createBody(bdef);
 
             shape.setAsBox((rect.getWidth()/2) / ProjectGdx.PPM, (rect.getHeight()/2) / ProjectGdx.PPM);
+            
             fdef.shape = shape;
             fdef.filter.categoryBits = ProjectGdx.OBJECT_BIT;
             body.createFixture(fdef);
+            
         }
         //Bricks einlesen
         for(MapObject object : map.getLayers().get("Brick").getObjects().getByType(RectangleMapObject.class)){
@@ -100,7 +100,7 @@ public class WorldCreator {
             body = world.createBody(bdef);
             shape.setAsBox((rect.getWidth()/2) / ProjectGdx.PPM, (rect.getHeight()/2) / ProjectGdx.PPM);
             fdef.shape = shape;
-            fdef.filter.categoryBits = ProjectGdx.BRICK_BIT;
+            fdef.filter.categoryBits = ProjectGdx.GROUND_BIT;
             body.createFixture(fdef);
 
             new Cloud(object, gameScreen);

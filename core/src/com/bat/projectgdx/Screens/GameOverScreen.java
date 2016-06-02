@@ -14,9 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bat.projectgdx.ProjectGdx;
 
-/**
- * Created by msc on 05/28/16.
- */
+
 
 //Bildschirm der angezeigt wird wenn das Spiel beendet ist - Bietet Möglichkeit neu zu starten
 public class GameOverScreen implements Screen {
@@ -24,11 +22,13 @@ public class GameOverScreen implements Screen {
     private Stage stage;
     private final String winMessage = "GEWONNEN!";
     private final String loseMessage = "DU BIST GESTORBEN!";
+    private final String player;
 
     private Game game;
 
     public GameOverScreen(Game game, boolean gameWon){
         this.game = game;
+        player=((GameScreen) this.game.getScreen()).getPlayername();
         viewport = new FitViewport(ProjectGdx.V_WIDTH, ProjectGdx.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((ProjectGdx) game).batch);
 
@@ -63,6 +63,8 @@ public class GameOverScreen implements Screen {
     	//Wenn Mauseingabe (Linksklick), dann wird das Spiel neugestartet
         if(Gdx.input.justTouched()) {
             game.setScreen(new GameScreen((ProjectGdx) game));
+            ((GameScreen) this.game.getScreen()).setPlayername(player);
+            ((GameScreen) this.game.getScreen()).setPlayerHudName();
             dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

@@ -6,9 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 18.03.2016.
- */
+
 
 //Abstrakte Klasse für Gegner
 public abstract class Enemy extends Sprite {
@@ -26,6 +24,7 @@ public abstract class Enemy extends Sprite {
         defineEnemy();
         velocity = new Vector2(1f, 0f);
         b2dbody.setActive(false);
+
     }
 
     protected abstract void defineEnemy();

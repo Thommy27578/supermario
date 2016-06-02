@@ -5,16 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.bat.projectgdx.ProjectGdx;
 import com.bat.projectgdx.Screens.GameScreen;
 
-/**
- * Created by MSC on 18.03.2016.
- */
 
 //Gegner Turtle - Verwalten der Position, des Körpers und Animation der Texturen 
 public class Turtle extends Enemy {
@@ -87,10 +83,16 @@ public class Turtle extends Enemy {
 	        bdef.position.set(getX(), getY());
 	        bdef.type = BodyDef.BodyType.DynamicBody;
 	        b2dbody = world.createBody(bdef);
+	        b2dbody.setGravityScale(1.1f);
 
 	        FixtureDef fdef = new FixtureDef();
-	        CircleShape shape = new CircleShape();
-	        shape.setRadius(6 / ProjectGdx.PPM);
+	        PolygonShape shape = new PolygonShape();
+	        Vector2[] shapevec = new Vector2[4];
+	        shapevec[0] = new Vector2(-6, -2).scl(1 / ProjectGdx.PPM);
+	        shapevec[1] = new Vector2(6, -2).scl(1 / ProjectGdx.PPM);
+	        shapevec[2] = new Vector2(-6, 4).scl(1 / ProjectGdx.PPM);
+	        shapevec[3] = new Vector2(6, 4).scl(1 / ProjectGdx.PPM);
+	        shape.set(shapevec);
 	        fdef.filter.categoryBits = ProjectGdx.ENEMY_BIT;
 	        fdef.filter.maskBits =
 	                ProjectGdx.OBJECT_BIT
@@ -100,20 +102,27 @@ public class Turtle extends Enemy {
 	                | ProjectGdx.ENEMY_BIT;
 
 	        fdef.shape = shape;
+	        
 	        b2dbody.createFixture(fdef).setUserData(this);
+	        shape.dispose();
 
 	        PolygonShape head = new PolygonShape();
 	        Vector2[] vertice = new Vector2[4];
-	        vertice[0] = new Vector2(-5, 8).scl(1 / ProjectGdx.PPM);
-	        vertice[1] = new Vector2(5, 8).scl(1 / ProjectGdx.PPM);
-	        vertice[2] = new Vector2(-3, 3).scl(1 / ProjectGdx.PPM);
-	        vertice[3] = new Vector2(3, 3).scl(1 / ProjectGdx.PPM);
+	        vertice[0] = new Vector2(-5.5f, 7).scl(1 / ProjectGdx.PPM);
+	        vertice[1] = new Vector2(5.5f, 7).scl(1 / ProjectGdx.PPM);
+	        vertice[2] = new Vector2(-4, 3).scl(1 / ProjectGdx.PPM);
+	        vertice[3] = new Vector2(4, 3).scl(1 / ProjectGdx.PPM);
 
 	        head.set(vertice);
+	      
+	       
 	        fdef.shape = head;
+	        
 	        fdef.restitution = 0.5f;
 	        fdef.filter.categoryBits = ProjectGdx.ENEMY_HEAD_BIT;
 	        b2dbody.createFixture(fdef).setUserData(this);
+	        head.dispose();
+	        
 	}
 
 	private float stateTime;

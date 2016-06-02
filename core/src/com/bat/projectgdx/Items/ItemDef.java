@@ -2,9 +2,7 @@ package com.bat.projectgdx.Items;
 
 import com.badlogic.gdx.math.Vector2;
 
-/**
- * Created by MSC on 01.04.2016.
- */
+
 
 //Item Definition - Beinhaltet nur die Position und den Untertypen (Um welche Art Item es sich handelt)
 
