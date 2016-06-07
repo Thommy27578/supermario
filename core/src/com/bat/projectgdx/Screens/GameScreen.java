@@ -216,7 +216,7 @@ public class GameScreen implements Screen {
         renderer.render();
 
         //render box2d
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
         
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
