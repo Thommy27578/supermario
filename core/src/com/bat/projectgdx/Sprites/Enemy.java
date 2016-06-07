@@ -14,6 +14,7 @@ public abstract class Enemy extends Sprite {
     protected World world;
     protected GameScreen gameScreen;
     public Body b2dbody;
+    protected boolean setToDestroy;
 
     public Vector2 velocity;
 
@@ -34,5 +35,9 @@ public abstract class Enemy extends Sprite {
     public abstract void reverseVelocity(boolean x, boolean y);
 
     public abstract void update(float delta);
+
+	public boolean isSetToDestroy() {
+		return setToDestroy;
+	}
 
 }

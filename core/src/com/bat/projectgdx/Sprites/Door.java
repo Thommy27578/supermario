@@ -19,6 +19,7 @@ public class Door extends InteractiveTileObject {
 
     @Override
     public void onHeadHit(Player player) {
+    	screen.getHud().addScore(1000);
     	player.die(true);
     }
 }

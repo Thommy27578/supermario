@@ -77,7 +77,7 @@ public class TitleScreen implements Screen {
     public void render(float delta) {
         if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
         	name = nameTextField.getText();
-        	GameScreen screen = new GameScreen((ProjectGdx) game);
+        	GameScreen screen = new GameScreen((ProjectGdx) game, 1);
         	screen.setPlayername(name);
         	screen.setPlayerHudName();
             game.setScreen(screen);

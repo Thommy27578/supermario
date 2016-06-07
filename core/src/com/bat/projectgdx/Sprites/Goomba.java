@@ -20,7 +20,7 @@ public class Goomba extends Enemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-    private boolean setToDestroy;
+    
     private boolean destroyed;
 
 
@@ -73,8 +73,8 @@ public class Goomba extends Enemy {
         Vector2[] shapevec = new Vector2[4];
         shapevec[0] = new Vector2(-6, -3).scl(1 / ProjectGdx.PPM);
         shapevec[1] = new Vector2(6, -3).scl(1 / ProjectGdx.PPM);
-        shapevec[2] = new Vector2(-6, 4).scl(1 / ProjectGdx.PPM);
-        shapevec[3] = new Vector2(6, 4).scl(1 / ProjectGdx.PPM);
+        shapevec[2] = new Vector2(-6, 3).scl(1 / ProjectGdx.PPM);
+        shapevec[3] = new Vector2(6, 3).scl(1 / ProjectGdx.PPM);
         shape.set(shapevec);
         fdef.filter.categoryBits = ProjectGdx.ENEMY_BIT;
         fdef.filter.maskBits =
@@ -89,8 +89,8 @@ public class Goomba extends Enemy {
 
         PolygonShape head = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 8).scl(1 / ProjectGdx.PPM);
-        vertice[1] = new Vector2(5, 8).scl(1 / ProjectGdx.PPM);
+        vertice[0] = new Vector2(-5.5f, 10f).scl(1 / ProjectGdx.PPM);
+        vertice[1] = new Vector2(5.5f, 10f).scl(1 / ProjectGdx.PPM);
         vertice[2] = new Vector2(-3, 3).scl(1 / ProjectGdx.PPM);
         vertice[3] = new Vector2(3, 3).scl(1 / ProjectGdx.PPM);
 

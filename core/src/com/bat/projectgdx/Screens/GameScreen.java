@@ -41,8 +41,9 @@ public class GameScreen implements Screen {
     private OrthographicCamera gameCam;
     private Hud hud;
     private Player player;
+    private int level=1;
     private final String TEXTUREPACK_NAME = "Sprites\\entities.pack";
-    private final String LEVEL_NAME = "Maps\\world3.tmx";
+    private String LEVEL_NAME = "Maps\\world1.tmx";
 
     //Variablen für die Tiled Map
     private TmxMapLoader mapLoader;
@@ -62,19 +63,20 @@ public class GameScreen implements Screen {
 
  
 
-	public GameScreen(ProjectGdx game){
+	public GameScreen(ProjectGdx game, int level){
     	
     	/*Erzeugen eines TextureAtlas für die Verwaltung der Grafiken für das Level, Spielobjekte,
     	und Entitäten wie den Spieler oder Gegner*/
     	
         atlas = new TextureAtlas(TEXTUREPACK_NAME);
+        this.level=level;
+        LEVEL_NAME= "Maps\\world" + this.level+ ".tmx";
 
         this.game = game;
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(ProjectGdx.V_WIDTH / ProjectGdx.PPM, ProjectGdx.V_HEIGHT / ProjectGdx.PPM, gameCam);
         hud = new Hud(game.batch, this);
-
-        
+       
         //Laden eines Levels
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(LEVEL_NAME);
@@ -214,7 +216,7 @@ public class GameScreen implements Screen {
         renderer.render();
 
         //render box2d
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
         
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
@@ -298,4 +300,24 @@ public class GameScreen implements Screen {
  	public void setPlayername(String playername) {
  		this.playername = playername;
  	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public String getLEVEL_NAME() {
+		return LEVEL_NAME;
+	}
+
+	public void setLEVEL_NAME(String lEVEL_NAME) {
+		LEVEL_NAME = lEVEL_NAME;
+	}
+	
+    public void setOldPoints(int points){
+    	hud.addScore(points);
+    }
 }

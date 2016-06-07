@@ -34,7 +34,7 @@ public class WorldContactListener implements ContactListener {
                 break;
 
             case ProjectGdx.PLAYER_BIT | ProjectGdx.ENEMY_BIT:
-                if(fixtureA.getFilterData().categoryBits == ProjectGdx.ENEMY_BIT && fixtureB.getUserData() != null){
+                if(fixtureA.getFilterData().categoryBits == ProjectGdx.ENEMY_BIT && fixtureB.getUserData() != null && !((Enemy)fixtureA.getUserData()).isSetToDestroy()){
                     ((Player)fixtureB.getUserData()).die(false);
                     ((Enemy)fixtureA.getUserData()).reverseVelocity(true, false);
                 }
@@ -83,6 +83,7 @@ public class WorldContactListener implements ContactListener {
                 
             case ProjectGdx.PLAYER_BIT | ProjectGdx.DOOR_BIT:
             	//contact.setEnabled(false);
+            	
                 if(fixtureA.getFilterData().categoryBits == ProjectGdx.PLAYER_BIT)
                     ((InteractiveTileObject) fixtureB.getUserData()).onHeadHit((Player) fixtureA.getUserData());
                 else

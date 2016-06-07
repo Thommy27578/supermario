@@ -129,7 +129,6 @@ public class Turtle extends Enemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-    private boolean setToDestroy;
     private boolean destroyed;
 
     public void draw(SpriteBatch spriteBatch){
